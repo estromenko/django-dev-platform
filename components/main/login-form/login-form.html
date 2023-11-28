@@ -1,0 +1,13 @@
+<div class="login-form">
+    <form class="login-form__form"
+          method="post"
+          hx-boost="true"
+          hx-swap="outerHTML transition:true">
+        {% csrf_token %}
+        <h2>Log in to continue</h2>
+        <table>
+            {{ form.as_table }}
+        </table>
+        <button class="login-form__submit-button" type="submit">Login</button>
+    </form>
+</div>

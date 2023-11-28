@@ -1,0 +1,33 @@
+<head>
+    <title># {{ chat.name }}</title>
+</head>
+<div id="chat-messages" class="chat-messages">
+    {% if chat %}
+        {% component 'loader' element_id="chat-messages-loader" %}
+        <div id="messages" class="chat-messages__messages">
+            {% for message in messages %}
+                <div class="chat-messages__message">
+                    <div class="chat-messages__message-sender">
+                        {% if message.sender.first_name %}
+                            {{ message.sender.first_name }} {{ message.sender.last_name }}
+                        {% else %}
+                            {{ message.sender.username }}
+                        {% endif %}
+                        | {{ message.created_at }}
+                    </div>
+                    <div class="chat-messages__message-text">
+                        <div class="chat-messages__message-actions">
+                            {% if user and message.sender == user %}
+                                <button hx-delete="{% url 'chat-message' chat_id=message.chat_id message_id=message.id %}"
+                                        hx-target="#chat-messages"
+                                        hx-swap="outerHTML transition:true">Delete</button>
+                            {% endif %}
+                        </div>
+                        {{ message.text }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% component 'message-input' chat=chat only %}
+    {% endif %}
+</div>

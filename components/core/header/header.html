@@ -1,0 +1,23 @@
+<header class="header">
+    <a class="header__link" href="{% url 'main' %}">{{ site_name }}</a>
+    {% if user.is_authenticated %}
+        <div>
+            {% for app_name, app_url in apps.items %}<a class="header__link" href="{{ app_url }}">{{ app_name }}</a>{% endfor %}
+        </div>
+    {% endif %}
+    <div>
+        {% if user.is_staff %}
+            <a class="header__link" href="{% url 'admin:index' %}">Admin</a>
+        {% endif %}
+        <a class="header__link"
+           hx-boost="true"
+           hx-swap="outerHTML transition:true"
+           href="{% url 'login' %}">
+            {% if user.is_authenticated %}
+                Logout
+            {% else %}
+                Login
+            {% endif %}
+        </a>
+    </div>
+</header>

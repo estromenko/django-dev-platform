@@ -1,0 +1,5 @@
+{% extends 'core/base.html' %}
+{% block content %}
+    {{ block.super }}
+    {% component 'chat-page' chat=chat only %}
+{% endblock %}
