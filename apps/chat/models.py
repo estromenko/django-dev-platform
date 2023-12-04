@@ -11,7 +11,7 @@ class Chat(models.Model):
     class Meta:
         db_table = "chat"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
     @property
@@ -30,5 +30,5 @@ class Message(models.Model):
         db_table = "message"
         ordering = ("created_at",)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'({self.id}) {self.sender.username}: "{self.text}"'

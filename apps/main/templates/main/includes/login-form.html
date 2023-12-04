@@ -1,0 +1,20 @@
+{% load widget_tweaks %}
+<div class="bg-zinc-800 text-white text-center pt-24 h-full">
+    <form class="inline-flex flex-col items-center gap-3 bg-zinc-900 p-8 rounded-xl shadow-xl"
+          method="post"
+          hx-boost="true"
+          hx-swap="outerHTML transition:true">
+        {% csrf_token %}
+        <h2 class="font-bold text-2xl">Log in to continue</h2>
+        <div class="text-red-600 text-wrap w-48">
+            {% for error in form.non_field_errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+        {% render_field form.username placeholder='Username' class="outline-none text-black rounded p-2" %}
+        {% render_field form.password placeholder='Password' class="outline-none text-black rounded p-2" %}
+        <button class="w-full bg-purple-800 rounded p-2 outline-none" type="submit">
+            Login
+        </button>
+    </form>
+</div>

@@ -5,20 +5,15 @@
         <title>
             {% block title %}{{ SITE_NAME }}{% endblock %}
         </title>
-        {% component_css_dependencies %}
-        {% block extrastyle %}
-            <link rel="stylesheet" href="{% static 'core/css/base.css' %}">
-        {% endblock %}
-        {% block extrahead %}
-            <script src="{% static 'core/vendor/js/htmx1.9.9.min.js' %}"></script>
-            <script src="{% static 'core/vendor/js/htmx-head-support.js' %}"></script>
-        {% endblock %}
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+        {% block extrastyle %}{% endblock %}
+        <script src="{% static 'core/vendor/js/htmx.min.js' %}"></script>
+        <script src="{% static 'core/vendor/js/htmx-ws.js' %}"></script>
+        <script src="{% static 'core/vendor/js/hyperscript.min.js' %}"></script>
+        {% block extrahead %}{% endblock %}
     </head>
-    <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
-          hx-ext="head-support">
-        {% block content %}
-            {% component 'header' user=request.user site_name=SITE_NAME only %}
-        {% endblock %}
-        {% component_js_dependencies %}
+    <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="h-screen flex flex-col">
+        {% include 'core/includes/header.html' %}
+        {% block content %}{% endblock %}
     </body>
 </html>

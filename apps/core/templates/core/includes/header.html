@@ -1,0 +1,31 @@
+<header class="flex justify-between bg-zinc-800 text-white p-3 shadow-xl shadow-black z-10 relative">
+    <a class="hover:text-zinc-400 transition-colors" href="{% url 'main' %}">
+        {{ SITE_NAME }}
+    </a>
+    {% if request.user.is_authenticated %}
+        <div>
+            {% for app_name, app_url in APPS_IN_HEADER.items %}
+                <a class="hover:text-zinc-400 transition-colors" href="{{ app_url }}">
+                    {{ app_name }}
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div class="flex gap-3">
+        {% if request.user.is_staff %}
+            <a class="hover:text-zinc-400 transition-colors" href="{% url 'admin:index' %}">
+                Admin
+            </a>
+        {% endif %}
+        <a class="hover:text-zinc-400 transition-colors"
+           hx-boost="true"
+           hx-swap="outerHTML transition:true"
+           href="{% url 'login' %}">
+            {% if request.user.is_authenticated %}
+                Logout
+            {% else %}
+                Login
+            {% endif %}
+        </a>
+    </div>
+</header>

@@ -1,4 +1,0 @@
-.chat-page {
-    display: flex;
-    height: calc(100% - var(--header-height));
-}

@@ -1,0 +1,25 @@
+<div class="message text-white my-5">
+    <div class="text-sm">
+        {% if message.sender.first_name %}
+            {{ message.sender.first_name }} {{ message.sender.last_name }}
+        {% else %}
+            {{ message.sender.username }}
+        {% endif %}
+        | {{ message.created_at }}
+    </div>
+    <div class="group inline-block relative bg-zinc-700 shadow shadow-black rounded p-2">
+        <div class="bg-zinc-700 rounded transition-opacity absolute top-0 right-0 opacity-0 group-hover:opacity-100">
+            {% if user and message.sender == user %}
+                <button class="bg-zinc-800 rounded px-2 shadow shadow-black"
+                        hx-delete="{% url 'chat-message' chat_id=message.chat_id message_id=message.id %}"
+                        hx-target="#chat-messages"
+                        hx-swap="none"
+                        _="on click remove closest .message"
+                >Delete</button>
+            {% endif %}
+        </div>
+        <div class="block min-w-[5rem]">
+            {{ message.text }}
+        </div>
+    </div>
+</div>

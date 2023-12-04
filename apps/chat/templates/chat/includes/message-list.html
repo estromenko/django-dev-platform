@@ -1,0 +1,17 @@
+<div id="chat-messages"
+     class="bg-zinc-800 w-full p-4 gap-6 flex flex-col justify-between"
+     {% if chat %}
+        hx-ext="ws"
+        ws-connect="/chat/ws/{{ chat.id }}/"
+     {% endif %}
+>
+    <div id="messages" class="overflow-y-scroll h-full">
+        {% include 'core/includes/loader.html' with element_id="chat-messages-loader" %}
+        {% for message in messages %}
+            {% include 'chat/includes/message.html' %}
+        {% endfor %}
+    </div>
+    {% if chat %}
+        {% include 'chat/includes/message-input.html' %}
+    {% endif %}
+</div>

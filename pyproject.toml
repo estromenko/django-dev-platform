@@ -2,7 +2,7 @@
 name = "django-dev-platform"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
+authors = ["Eduard Stromenko <estromenko@mail.ru>"]
 license = "MIT"
 readme = "README.md"
 packages = [{include = "django_dev_platform"}]
@@ -10,13 +10,16 @@ packages = [{include = "django_dev_platform"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 django = "^4.2.7"
-django-components = "^0.29"
 python-dotenv = "^1.0.0"
+channels = {extras = ["daphne"], version = "^4.0.0"}
+channels-redis = "^4.1.0"
+django-widget-tweaks = "^1.5.0"
 
 
 [tool.poetry.group.dev.dependencies]
 ipython = "^8.18.1"
 django-stubs = "^4.2.6"
+ruff = "^0.1.7"
 
 [build-system]
 requires = ["poetry-core"]

@@ -18,16 +18,18 @@ class ChatView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context.update(
             {
+                "chats": Chat.objects.all(),
                 "chat": chat,
                 "messages": messages,
                 "user": self.request.user,
-            }
+                "selected_chat": chat,
+            },
         )
         return context
 
 
 class ChatMessagesView(TemplateView):
-    template_name = "chat/messages.html"
+    template_name = "chat/includes/message-list.html"
     model = Message
 
     def get_context_data(self, **kwargs):
@@ -37,7 +39,7 @@ class ChatMessagesView(TemplateView):
             {
                 "chat": Chat.objects.get(id=chat_id),
                 "user": self.request.user,
-            }
+            },
         )
         return context
 

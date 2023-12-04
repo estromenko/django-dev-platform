@@ -1,0 +1,16 @@
+<div class="w-64 bg-zinc-800 relative flex flex-col z-1 shadow-xl shadow-black">
+    <div class="text-white p-3">Chats</div>
+    {% for chat in chats %}
+        <a class="p-3 gap-1 flex items-center{% if selected_chat.id == chat.id %} bg-purple-600{% endif %}"
+             href="{% url 'chat' chat_id=chat.id %}"
+             hx-boost="true"
+             hx-swap="outerHTML transition:true"
+             hx-indicator="#chat-messages-loader"
+        >
+            <div class="w-8 h-8 flex justify-center items-center rounded bg-white">
+                {{ chat.image_placeholder_text }}
+            </div>
+            <span class="text-white"># {{ chat.name }}</span>
+        </a>
+    {% endfor %}
+</div>

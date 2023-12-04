@@ -1,0 +1,15 @@
+<form ws-send id="message-input-form">
+    <label>
+        <textarea id="message-input"
+                  class="text-white outline-none rounded p-1 h-10 resize-none w-full bg-zinc-800 border"
+                  placeholder="Message"
+                  name="text"
+                  _="on keydown
+                     if event.code is 'Enter' and not event.shiftKey
+                        trigger submit on #message-input-form
+                     then
+                        set my.value to '' then halt
+                  "
+        ></textarea>
+    </label>
+</form>

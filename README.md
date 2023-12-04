@@ -24,17 +24,23 @@
 Requirements:
 - python>=3.11
 - [poetry](https://python-poetry.org)
-- [pre-commit](https://pre-commit.com) (optional)
+- [Tailwind CSS standalone cli](https://tailwindcss.com/blog/standalone-cli)
+- docker
 
 ## 1. Install dependencies
 
 ```bash
-poetry install
+poetry install --no-root
 ```
 
 ## 2. Apply migrations
 ```bash
 poetry run ./manage.py migrate
+```
+
+## 3. Run redis
+```bash
+docker run --rm --net host -d redis:7.2.3-alpine3.18
 ```
 
 ## 3. Run server
@@ -45,12 +51,6 @@ poetry run ./manage.py runserver
 ## 4. Create superuser (optional)
 ```bash
 poetry run ./manage.py createsuperuser
-```
-
-## 5. Install git hooks (optional)
-
-```bash
-pre-commit install
 ```
 
 <hr>

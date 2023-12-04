@@ -12,23 +12,29 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 if not SECRET_KEY:
-    raise ImproperlyConfigured("SECRET_KEY is not specified")
+    msg = "SECRET_KEY is not specified"
+    raise ImproperlyConfigured(msg)
 
 DEBUG = os.getenv("DEBUG", "false").lower() == "true"
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
 
 INSTALLED_APPS = [
+    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "django_components",
-    "django_components.safer_staticfiles",
+    "django.contrib.staticfiles",
+    "widget_tweaks",
     "apps.core",
     "apps.chat",
     "apps.main",
+]
+
+INTERNAL_IPS = [
+    "127.0.0.1",
 ]
 
 MIDDLEWARE = [
@@ -39,7 +45,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django_components.middleware.ComponentDependencyMiddleware",
 ]
 
 ROOT_URLCONF = "conf.urls"
@@ -48,6 +53,7 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [],
+        "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",
@@ -56,30 +62,30 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "apps.core.context_processors.global_variables",
             ],
-            "loaders": [
-                (
-                    "django.template.loaders.cached.Loader",
-                    [
-                        "django.template.loaders.filesystem.Loader",
-                        "django.template.loaders.app_directories.Loader",
-                        "django_components.template_loader.Loader",
-                    ],
-                )
-            ],
-            "builtins": [
-                "django_components.templatetags.component_tags",
-            ],
         },
     },
 ]
 
-WSGI_APPLICATION = "conf.wsgi.application"
+ASGI_APPLICATION = "conf.asgi.application"
+
+REDIS_HOST = os.getenv("REDIS_HOST", "127.0.0.1")
+
+REDIS_PORT = int(os.getenv("REDIS_PORT", "6379"))
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [(REDIS_HOST, REDIS_PORT)],
+        },
+    },
+}
 
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
-    }
+    },
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -111,15 +117,11 @@ STATIC_URL = "/static/"
 
 STATIC_ROOT = BASE_DIR / "static"
 
-STATICFILES_DIRS = (BASE_DIR / "components",)
+STATICFILES_DIRS = (BASE_DIR / "dist",)
 
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-COMPONENTS = {
-    "RENDER_DEPENDENCIES": True,
-}
 
 SITE_NAME = "Django Dev Platform"
 
