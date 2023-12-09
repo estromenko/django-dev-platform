@@ -1,4 +1,7 @@
-<div class="message text-white my-5">
+<div class="message text-white my-5"
+     _="init get #messages
+        then set its scrollTop to its scrollHeight"
+>
     <div class="text-sm">
         {% if message.sender.first_name %}
             {{ message.sender.first_name }} {{ message.sender.last_name }}

@@ -5,7 +5,7 @@
         ws-connect="/chat/ws/{{ chat.id }}/"
      {% endif %}
 >
-    <div id="messages" class="overflow-y-scroll h-full">
+    <div id="messages" class="overflow-y-scroll" _="init set me.scrollTop to me.scrollHeight">
         {% include 'core/includes/loader.html' with element_id="chat-messages-loader" %}
         {% for message in messages %}
             {% include 'chat/includes/message.html' %}
