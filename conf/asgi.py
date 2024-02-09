@@ -43,5 +43,9 @@ if not settings.DEBUG:
     output_file = settings.BASE_DIR / "dist/styles.css"
     command = f"tailwindcss -c {config_path} -i {input_file} -o {output_file} -w -p"
     subprocess.run(
-        command.split(), shell=True, check=True, stderr=sys.stderr, stdout=sys.stdout
+        command.split(),
+        shell=True,
+        check=True,
+        stderr=sys.stderr,
+        stdout=sys.stdout,
     )

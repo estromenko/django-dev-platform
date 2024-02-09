@@ -5,3 +5,4 @@ __pycache__
 /static
 /dist
 db.sqlite3
+pyrightconfig.json

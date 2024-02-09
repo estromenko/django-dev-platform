@@ -128,3 +128,5 @@ SITE_NAME = "Django Dev Platform"
 APPS_IN_HEADER = {"Chat": reverse_lazy("chat")}
 
 DEFAULT_APP_URL_NAME = "chat"
+
+LOGIN_REDIRECT_URL = reverse_lazy("main")
